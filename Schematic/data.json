@@ -1,0 +1,46 @@
+{
+    "userArray": [
+        {
+          "name": "Nguyen Dat",
+          "email": "Official.nguyendat@gmail.com",
+          "number": "0876.899.998",
+          "balance": 0
+        },
+        {
+          "name": "Tran Nguyen Anh Khoa",
+          "email": "Official.anhkhoa@gmail.com",
+          "number": "0876.00.00.44",
+          "balance": 100
+        },
+        {
+          "name": "Mai Hong Phong",
+          "email": "Official.hongphong@gmail.com",
+          "number": "0866.519.679",
+          "balance": 400
+        },
+        {
+            "name": "Duy Thanh",
+            "email": "Official.duythanh@gmail.com",
+            "number": "0876.123.012",
+            "balance": 0
+        },
+        {
+            "name": "Tran Tuan Kiet",
+            "email": "Official.tuankiet@gmail.com",
+            "number": "0876.420.666",
+            "balance": 100
+        },
+        {
+            "name": "Nguyen Huy Hoang",
+            "email": "Official.huyhoang@gmail.com",
+            "number": "0961.962.596",
+            "balance": 400
+        },
+        {
+            "name": "Minh Nhat",
+            "email": "Official.minhnhat@gmail.com",
+            "number": "0961.962.124",
+            "balance": 1000
+        }
+    ]
+  }
