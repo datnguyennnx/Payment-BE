@@ -2,44 +2,44 @@
     "userArray": [
         {
           "name": "Nguyen Dat",
-          "email": "Official.nguyendat@gmail.com",
           "number": "0876.899.998",
+          "email": "Official.nguyendat@gmail.com",
           "balance": 0
         },
         {
           "name": "Tran Nguyen Anh Khoa",
-          "email": "Official.anhkhoa@gmail.com",
           "number": "0876.00.00.44",
-          "balance": 100
+          "email": "Official.anhkhoa@gmail.com",
+          "balance": 1000
         },
         {
           "name": "Mai Hong Phong",
-          "email": "Official.hongphong@gmail.com",
           "number": "0866.519.679",
+          "email": "Official.hongphong@gmail.com",
           "balance": 400
         },
         {
             "name": "Duy Thanh",
-            "email": "Official.duythanh@gmail.com",
             "number": "0876.123.012",
+            "email": "Official.duythanh@gmail.com",
             "balance": 0
         },
         {
             "name": "Tran Tuan Kiet",
-            "email": "Official.tuankiet@gmail.com",
             "number": "0876.420.666",
+            "email": "Official.tuankiet@gmail.com",
             "balance": 100
         },
         {
             "name": "Nguyen Huy Hoang",
-            "email": "Official.huyhoang@gmail.com",
             "number": "0961.962.596",
+            "email": "Official.huyhoang@gmail.com",
             "balance": 400
         },
         {
             "name": "Minh Nhat",
-            "email": "Official.minhnhat@gmail.com",
             "number": "0961.962.124",
+            "email": "Official.minhnhat@gmail.com",
             "balance": 1000
         }
     ]

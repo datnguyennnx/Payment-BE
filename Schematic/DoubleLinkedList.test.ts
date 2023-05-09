@@ -1,22 +1,153 @@
 import { DoubleLinkedList } from "./DoubleLinkedList"
 import { AccountUser } from "./Account"
+import { sponsorTo } from "./Transfers"
+import { Entries } from "./Entries"
 import * as fs from 'fs';
+import * as promptSync from 'prompt-sync';
 
 const dataUser = fs.readFileSync("./data.json", 'utf-8')
 const jsonData = JSON.parse(dataUser);
 
 let propertiesUserArray = new Array()
-const userArray = new DoubleLinkedList<AccountUser>
+const data = new Array()
+
+const userDBL = new DoubleLinkedList<AccountUser>
+const paymentDBL = new DoubleLinkedList<Entries>
 
 for(let key in jsonData.userArray) {
     for (let values in jsonData.userArray[key]) {
         propertiesUserArray.push(jsonData.userArray[key][values])
     }
-    userArray.addFirst(new AccountUser(propertiesUserArray))
+    userDBL.addLast(new AccountUser(propertiesUserArray))
+    data.push(userDBL.getNodeValue(key))
     propertiesUserArray = []
- }
+}
 
-userArray.printAll()
+// console.log(data[1])
+// console.log(userDBL.getNodeValue(1))
+// data[1].setName("Khoa")
+// data[1].setEmail("abcxyz@gmail.com")
+// data[1].setNumber("0123123")
+// console.log("===================================================")
+// console.log(data[1])
+// console.log(userDBL.getNodeValue(1))
+
+
+
+// console.log(data)
+
+
+//Return object
+function returnObject(data: any[], email: string): AccountUser {
+    for( let key in data) {
+        for (let value in data[key]){
+            if( email == data[key][value]){
+                return data[key]
+            }
+        }
+    }
+}
+
+const prompt = promptSync();
+
+
+const email = prompt("Input email:  ")
+const amount = prompt("Sponsor amount: ")
+const message = prompt("Message: ")
+
+const amountVal: number = +amount
+const checkMail = email  
+const form = [message, amountVal ]
+
+
+// const checkMail1 = "Official.hongphong@gmail.com"
+// const form1 = ["Lorem Ipsum is simply dummy text of the printing and typesetting industry. ", 100]
+
+
+const userSponsor = returnObject(data, checkMail)
+// const userSponsor1 = returnObject(data, checkMail1)
+
+
+const userReceiver = data[0]
+
+console.log(data[0])
+console.log(userSponsor)
+// console.log(userSponsor1)
+
+console.log("===================================================")
+sponsorTo(userSponsor, userReceiver, form, paymentDBL)
+// sponsorTo(userSponsor1, userReceiver, form1, paymentDBL)
+
+console.log(data[0])
+console.log(userSponsor)
+// console.log(userSponsor1)
+
+
+
+// // Return value of object
+// for( let key in data) {
+//     for (let value in data[key]){
+//         if(checkMail == data[key][value]){
+//             console.log(data[key][value]) 
+//             break
+//         }
+//     }
+// }
+
+
+
+// console.log(userArray.get_Node_Value(1))
+// console.log("===================================================")
+// console.log(data)
+// const account1 = new AccountUser(["Dat Nguyen", "0903260302", "Official.nguyendat@gmail.com", 0])
+// const account2 = new AccountUser(["Tran Nguyen Anh Khoa", "0903260302", "Official.anhkhoa@gmail.com", 100])
+// const account3 = new AccountUser(["Mai Hong Phong", "0903260302", "Official.hongphong@gmail.com", 200])
+
+// const newArray = new DoubleLinkedList<AccountUser>
+// newArray.addFirst(account1)
+// newArray.addFirst(account2)
+// newArray.addFirst(account3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

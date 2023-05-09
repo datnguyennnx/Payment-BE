@@ -6,5 +6,6 @@
       "target": "es6",
       "skipLibCheck": true,
       "strict": true
-  }
+  },
+  "include": ["src/**/*"]
 }

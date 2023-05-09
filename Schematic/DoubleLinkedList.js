@@ -1,8 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DoubleLinkedList = exports.Node = void 0;
+var Account_1 = require("./Account");
 var Node = /** @class */ (function () {
     function Node() {
+        this.value = new Account_1.AccountUser([]);
+        this.next = null;
+        this.prev = null;
     }
     return Node;
 }());
@@ -13,6 +17,7 @@ var DoubleLinkedList = /** @class */ (function () {
         this.head = null;
         this.tail = null;
         this.size = 0;
+        this.comparator = function () { return false; };
     }
     DoubleLinkedList.prototype.addFirst = function (value) {
         if (this.isEmpty()) {
@@ -35,10 +40,10 @@ var DoubleLinkedList = /** @class */ (function () {
     DoubleLinkedList.prototype.addLast = function (value) {
         if (this.isEmpty()) {
             var tmp = new Node();
+            tmp.value = value;
             this.head = tmp;
             this.tail = tmp;
             this.size++;
-            return;
         }
         else {
             var tmp = new Node();
@@ -62,6 +67,18 @@ var DoubleLinkedList = /** @class */ (function () {
             console.log(curr.value);
             curr = curr.next;
         }
+    };
+    DoubleLinkedList.prototype.getNodeValue = function (index) {
+        if (index < 0 || index >= this.length) {
+            return null;
+        }
+        var current = this.head;
+        var count = 0;
+        while (count < index) {
+            current = current.next;
+            count++;
+        }
+        return current.value;
     };
     DoubleLinkedList.prototype.removeFirst = function () {
         if (this.isEmpty()) {
@@ -108,7 +125,7 @@ var DoubleLinkedList = /** @class */ (function () {
         var tmp = this.head;
         while (tmp != null) {
             if (tmp.value === value) {
-                return index;
+                return value;
             }
             tmp = tmp.next;
             index++;
