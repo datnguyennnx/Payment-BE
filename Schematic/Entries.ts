@@ -1,15 +1,15 @@
 
 export class Entries  {
-    private _id: number | undefined
-    private _account_id: number | undefined
-    private _amount: number | undefined
+    private _id: number 
+    private _account_id: number 
+    private _amount: number 
     private _createdAt: Date
     
-    constructor( inforPayment: any[]) {
+    constructor( inforPayment: [number, number, number, Date]) {
         this._id = inforPayment[0]
         this._account_id = inforPayment[1] 
         this._amount = inforPayment[2]
-        this._createdAt = new Date()
+        this._createdAt = inforPayment[3]
     }
 
     getInformation(){

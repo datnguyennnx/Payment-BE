@@ -3,25 +3,11 @@ import { AccountUser } from "./Account"
 import { sponsorTo } from "./Transfers"
 import { Entries } from "./Entries"
 import * as fs from 'fs';
-import * as promptSync from 'prompt-sync';
+import * as promptSync from 'prompt-sync'
 
-const dataUser = fs.readFileSync("./data.json", 'utf-8')
-const jsonData = JSON.parse(dataUser);
 
-let propertiesUserArray = new Array()
-const data = new Array()
 
-const userDBL = new DoubleLinkedList<AccountUser>
-const paymentDBL = new DoubleLinkedList<Entries>
 
-for(let key in jsonData.userArray) {
-    for (let values in jsonData.userArray[key]) {
-        propertiesUserArray.push(jsonData.userArray[key][values])
-    }
-    userDBL.addLast(new AccountUser(propertiesUserArray))
-    data.push(userDBL.getNodeValue(key))
-    propertiesUserArray = []
-}
 
 // console.log(data[1])
 // console.log(userDBL.getNodeValue(1))
@@ -38,7 +24,7 @@ for(let key in jsonData.userArray) {
 
 
 //Return object
-function returnObject(data: any[], email: string): AccountUser {
+function returnObject(data: any[], email: string) {
     for( let key in data) {
         for (let value in data[key]){
             if( email == data[key][value]){
@@ -46,41 +32,137 @@ function returnObject(data: any[], email: string): AccountUser {
             }
         }
     }
+} 
+
+const dataUser = fs.readFileSync("./data.json", 'utf-8')
+const jsonData = JSON.parse(dataUser);
+const data = new Array()
+const prompt = promptSync({sigint: true});
+
+const userDBL = new DoubleLinkedList<AccountUser>
+const paymentDBL = new DoubleLinkedList<Entries>
+
+
+
+
+for(let key in jsonData.userArray) {
+    let propertiesUserArray = new Array()
+    for (let values in jsonData.userArray[key]) {
+        propertiesUserArray.push(jsonData.userArray[key][values])
+    }
+    userDBL.addLast(new AccountUser(propertiesUserArray))
+    data.push(userDBL.getNodeValue(key))
 }
 
-const prompt = promptSync();
+while(true){
+    console.log("1. Donated to blog ")
+    console.log("2. Show Value DBL User")
+    console.log("3. Show Value DLB Payment")
+    console.log("4. Show Node DBL User")
+    console.log("5. Show Node DLB Payment")
+
+    let positionStr = prompt("Chosse [1-5]:--   ")
+    const position: number = +positionStr
+    switch(position) { 
+        case 1: { 
+            console.log("===== Email available =====")
+            userDBL.printAllEmail()
+            let emailReceiver = prompt("Input email Receiver: ")
+            let emailSponsor = prompt("Input email Sponsor:  ")
+            let amount = prompt("Sponsor amount: ")
+            let message = prompt("Write message: ") 
+            let amountVal: number = +amount
+
+            emailReceiver.toLowerCase()
+            emailSponsor.toLowerCase()
+
+            let userReceiver = returnObject(data, emailReceiver)
+            let userSponsor = returnObject(data, emailSponsor)
+
+            while(((userReceiver && userSponsor) != undefined) && ((emailSponsor === emailReceiver) != false)){
+
+                emailReceiver = prompt("Input email Receiver: ")
+                emailSponsor = prompt("Input email Sponsor:  ")
+                amount = prompt("Sponsor amount: ")
+                message = prompt("Write message: ") 
+
+                emailReceiver.toLowerCase()
+                emailSponsor.toLowerCase()
+
+                userReceiver = returnObject(data, emailReceiver)
+                userSponsor = returnObject(data, emailSponsor)
+            }
+            sponsorTo(userSponsor, userReceiver, [message, amountVal], paymentDBL)
+            console.log("======================================================")
+            break
+        } 
+        case 2: { 
+            userDBL.printAll()
+            break; 
+        } 
+        case 3: { 
+            paymentDBL.printAll()
+            break; 
+        } 
+        case 4: { 
+            console.log(userDBL)
+            break; 
+        } 
+        case 5: { 
+            console.log(paymentDBL)
+            break; 
+        } 
+        case 6: { 
+            userDBL.bubbleSort(userDBL)
+            break; 
+        } 
+
+        
+        default: { 
+            console.log("WRONG INPUT")
+            break; 
+        } 
+     } 
+    // const amountVal: number = +amount
+    // const checkMail = email  
+
+    // if(email == data[0].getEmail()){
+    //     console.error("This email is used to donated. (Wrong email)")
+    //     email = prompt("Input email (Sponsor):  ")
+    //     amount = prompt("Sponsor amount: ")
+    //     message = prompt("Write message: ")
+    // }  else {
+    //     continue
+    // }
+
+    // // const checkMail1 = "Official.hongphong@gmail.com"
+    // // const form1 = ["Lorem Ipsum is simply dummy text of the printing and typesetting industry. ", 100]
 
 
-const email = prompt("Input email:  ")
-const amount = prompt("Sponsor amount: ")
-const message = prompt("Message: ")
-
-const amountVal: number = +amount
-const checkMail = email  
-const form = [message, amountVal ]
+    // const userSponsor = returnObject(data, checkMail)
+    // // const userSponsor1 = returnObject(data, checkMail1)
 
 
-// const checkMail1 = "Official.hongphong@gmail.com"
-// const form1 = ["Lorem Ipsum is simply dummy text of the printing and typesetting industry. ", 100]
+    // const userReceiver = data[0]
 
+    // // console.log(data[0])
+    // // console.log(userSponsor)
+    // // console.log(userSponsor1)
 
-const userSponsor = returnObject(data, checkMail)
-// const userSponsor1 = returnObject(data, checkMail1)
+    // console.log("===================================================")
+    
+    // // sponsorTo(userSponsor1, userReceiver, form1, paymentDBL)
 
+    // // console.log(data[0])
+    // // console.log(userSponsor)
+    // console.log(userDBL)
+    // // console.log("===================================================")
 
-const userReceiver = data[0]
+    // // console.log(userSponsor1)
+    // console.log("===================================================")
+    // console.log(paymentDBL)
+}
 
-console.log(data[0])
-console.log(userSponsor)
-// console.log(userSponsor1)
-
-console.log("===================================================")
-sponsorTo(userSponsor, userReceiver, form, paymentDBL)
-// sponsorTo(userSponsor1, userReceiver, form1, paymentDBL)
-
-console.log(data[0])
-console.log(userSponsor)
-// console.log(userSponsor1)
 
 
 

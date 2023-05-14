@@ -2,15 +2,15 @@ import { Transfers } from "./Transfers"
 
 
 export class AccountUser {
-    private _account_id: number | undefined
-    private _name: string | undefined
-    private _number: string | undefined
-    public _email: string | undefined
-    private _balance: number | undefined
-    private _listTransfer: Transfers[] | undefined
+    private _account_id: number 
+    private _name: string 
+    private _number: string 
+    public _email: string 
+    private _balance: number 
+    private _listTransfer: Transfers[] 
 
     constructor( inforUser: [string, string, string, number]) {
-        this._account_id = Math.floor(new Date().valueOf() * Math.random());
+        this._account_id = Math.floor(new Date().valueOf() * Math.random())
         this._name = inforUser[0] 
         this._number = inforUser[1]
         this._email = inforUser[2]
@@ -24,15 +24,15 @@ export class AccountUser {
     }
 
     getName() {
-        return this._name
+      return this._name
     }
 
     getNumber() {
       return this._number
     }
 
-    getEmail() {
-        return this._email
+    getEmail(): string {
+      return this._email
     }
 
     getBalance() {
@@ -51,7 +51,7 @@ export class AccountUser {
     this._name = name
     }
 
-    getAccountID(_account_id: number){
+    getAccountID(){
       return this._account_id
     }
 
@@ -64,7 +64,7 @@ export class AccountUser {
     }
 
     pushTransfer(item: Transfers) {
-        return this._listTransfer?.push(item)
+        return this._listTransfer.push(item)
     }
     
     getListTransfer(){

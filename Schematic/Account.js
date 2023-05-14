@@ -34,7 +34,7 @@ var AccountUser = /** @class */ (function () {
     AccountUser.prototype.setName = function (name) {
         this._name = name;
     };
-    AccountUser.prototype.getAccountID = function (_account_id) {
+    AccountUser.prototype.getAccountID = function () {
         return this._account_id;
     };
     AccountUser.prototype.sponsor = function (amount) {
@@ -44,8 +44,7 @@ var AccountUser = /** @class */ (function () {
         return this._balance += amount;
     };
     AccountUser.prototype.pushTransfer = function (item) {
-        var _a;
-        return (_a = this._listTransfer) === null || _a === void 0 ? void 0 : _a.push(item);
+        return this._listTransfer.push(item);
     };
     AccountUser.prototype.getListTransfer = function () {
         return this._listTransfer;

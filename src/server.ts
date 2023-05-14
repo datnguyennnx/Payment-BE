@@ -1,24 +1,43 @@
 import express, { Express, Request, Response } from "express"
 import { DoubleLinkedList } from "../Schematic/DoubleLinkedList"
 import { AccountUser } from "../Schematic/Account"
+import { sponsorTo } from "../Schematic/Transfers"
+import { Entries } from "../Schematic/Entries"
 import * as fs from 'fs';
+import *  as helper from "./helper"
+
+
+const userDBL = new DoubleLinkedList<AccountUser>
+const paymentDBL = new DoubleLinkedList<Entries>
+
+const data = new Array()
+
+const dataUser = fs.readFileSync("./data.json", 'utf-8')
+const jsonData = JSON.parse(dataUser);
+
+helper.renderData(jsonData, data, userDBL)
+
+console.log(data, userDBL)
+
+
+function returnObject(data: any[], email: string) {
+    for( let key in data) {
+        for (let value in data[key]){
+            if( email == data[key][value]){
+                return data[key]
+            }
+        }
+    }
+}
+
 
 const port = 8000
 
-const accout1 = new AccountUser(["Dat Nguyen", "0903260302", "Official.nguyendat@gmail.com", 0])
-const accout2 = new AccountUser(["Tran Nguyen Anh Khoa", "0903260302", "Official.anhkhoa@gmail.com", 100])
-const accout3 = new AccountUser(["Mai Hong Phong", "0903260302", "Official.hongphong@gmail.com", 200])
-const newArray = new DoubleLinkedList<AccountUser>
-newArray.addFirst(accout1)
-newArray.addFirst(accout2)
-newArray.addFirst(accout3)
-
-const data = [accout1.getInformation(), accout2.getInformation(), accout3.getInformation()]
 
 const app: Express = express()
 
 app.get("/", (req: Request, res: Response) => {
-    res.send(JSON.stringify(data))
+    res.send(JSON.stringify(JSON.stringify(data)))
 }) 
 
 app.listen(port, () => {

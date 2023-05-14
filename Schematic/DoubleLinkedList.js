@@ -1,10 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DoubleLinkedList = exports.Node = void 0;
-var Account_1 = require("./Account");
 var Node = /** @class */ (function () {
     function Node() {
-        this.value = new Account_1.AccountUser([]);
+        this.value = this.value;
         this.next = null;
         this.prev = null;
     }
@@ -17,7 +16,6 @@ var DoubleLinkedList = /** @class */ (function () {
         this.head = null;
         this.tail = null;
         this.size = 0;
-        this.comparator = function () { return false; };
     }
     DoubleLinkedList.prototype.addFirst = function (value) {
         if (this.isEmpty()) {
@@ -65,6 +63,15 @@ var DoubleLinkedList = /** @class */ (function () {
         var curr = this.head;
         while (curr) {
             console.log(curr.value);
+            curr = curr.next;
+        }
+    };
+    DoubleLinkedList.prototype.printAllEmail = function () {
+        var curr = this.head;
+        var index = 1;
+        while (curr) {
+            console.log(index, " ", curr.value._email);
+            index++;
             curr = curr.next;
         }
     };
@@ -131,6 +138,29 @@ var DoubleLinkedList = /** @class */ (function () {
             index++;
         }
         return "Value is not exit";
+    };
+    DoubleLinkedList.prototype.bubbleSort = function (start) {
+        var swapped;
+        var ptr1;
+        var lptr = null;
+        // Checking for empty list
+        if (start == null)
+            return null;
+        do {
+            swapped = 0;
+            ptr1 = start;
+            while (ptr1.next != lptr) {
+                if (ptr1.value._balance > ptr1.next.value._balance) {
+                    var t = ptr1.value._balance;
+                    ptr1.value._balance = ptr1.next.value._balance;
+                    ptr1.next.value._balance = t;
+                    swapped = 1;
+                }
+                ptr1 = ptr1.next;
+            }
+            lptr = ptr1;
+        } while (swapped != 0);
+        return start;
     };
     return DoubleLinkedList;
 }());

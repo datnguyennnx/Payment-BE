@@ -6,7 +6,7 @@ var Entries = /** @class */ (function () {
         this._id = inforPayment[0];
         this._account_id = inforPayment[1];
         this._amount = inforPayment[2];
-        this._createdAt = new Date();
+        this._createdAt = inforPayment[3];
     }
     Entries.prototype.getInformation = function () {
         return [this._id, this._account_id, this._amount, this._createdAt];

@@ -5,20 +5,6 @@ var Account_1 = require("./Account");
 var Transfers_1 = require("./Transfers");
 var fs = require("fs");
 var promptSync = require("prompt-sync");
-var dataUser = fs.readFileSync("./data.json", 'utf-8');
-var jsonData = JSON.parse(dataUser);
-var propertiesUserArray = new Array();
-var data = new Array();
-var userDBL = new DoubleLinkedList_1.DoubleLinkedList;
-var paymentDBL = new DoubleLinkedList_1.DoubleLinkedList;
-for (var key in jsonData.userArray) {
-    for (var values in jsonData.userArray[key]) {
-        propertiesUserArray.push(jsonData.userArray[key][values]);
-    }
-    userDBL.addLast(new Account_1.AccountUser(propertiesUserArray));
-    data.push(userDBL.getNodeValue(key));
-    propertiesUserArray = [];
-}
 // console.log(data[1])
 // console.log(userDBL.getNodeValue(1))
 // data[1].setName("Khoa")
@@ -38,27 +24,108 @@ function returnObject(data, email) {
         }
     }
 }
-var prompt = promptSync();
-var email = prompt("Input email:  ");
-var amount = prompt("Sponsor amount: ");
-var message = prompt("Message: ");
-var amountVal = +amount;
-var checkMail = email;
-var form = [message, amountVal];
-// const checkMail1 = "Official.hongphong@gmail.com"
-// const form1 = ["Lorem Ipsum is simply dummy text of the printing and typesetting industry. ", 100]
-var userSponsor = returnObject(data, checkMail);
-// const userSponsor1 = returnObject(data, checkMail1)
-var userReceiver = data[0];
-console.log(data[0]);
-console.log(userSponsor);
-// console.log(userSponsor1)
-console.log("===================================================");
-(0, Transfers_1.sponsorTo)(userSponsor, userReceiver, form, paymentDBL);
-// sponsorTo(userSponsor1, userReceiver, form1, paymentDBL)
-console.log(data[0]);
-console.log(userSponsor);
-// console.log(userSponsor1)
+var dataUser = fs.readFileSync("./data.json", 'utf-8');
+var jsonData = JSON.parse(dataUser);
+var data = new Array();
+var prompt = promptSync({ sigint: true });
+var userDBL = new DoubleLinkedList_1.DoubleLinkedList;
+var paymentDBL = new DoubleLinkedList_1.DoubleLinkedList;
+for (var key in jsonData.userArray) {
+    var propertiesUserArray = new Array();
+    for (var values in jsonData.userArray[key]) {
+        propertiesUserArray.push(jsonData.userArray[key][values]);
+    }
+    userDBL.addLast(new Account_1.AccountUser(propertiesUserArray));
+    data.push(userDBL.getNodeValue(key));
+}
+while (true) {
+    console.log("1. Donated to blog ");
+    console.log("2. Show Value DBL User");
+    console.log("3. Show Value DLB Payment");
+    console.log("4. Show Node DBL User");
+    console.log("5. Show Node DLB Payment");
+    var positionStr = prompt("Chosse [1-5]:--   ");
+    var position = +positionStr;
+    switch (position) {
+        case 1: {
+            console.log("===== Email available =====");
+            userDBL.printAllEmail();
+            var emailReceiver = prompt("Input email Receiver: ");
+            var emailSponsor = prompt("Input email Sponsor:  ");
+            var amount = prompt("Sponsor amount: ");
+            var message = prompt("Write message: ");
+            var amountVal = +amount;
+            emailReceiver.toLowerCase();
+            emailSponsor.toLowerCase();
+            var userReceiver = returnObject(data, emailReceiver);
+            var userSponsor = returnObject(data, emailSponsor);
+            while (((userReceiver && userSponsor) != undefined) && ((emailSponsor === emailReceiver) != false)) {
+                emailReceiver = prompt("Input email Receiver: ");
+                emailSponsor = prompt("Input email Sponsor:  ");
+                amount = prompt("Sponsor amount: ");
+                message = prompt("Write message: ");
+                emailReceiver.toLowerCase();
+                emailSponsor.toLowerCase();
+                userReceiver = returnObject(data, emailReceiver);
+                userSponsor = returnObject(data, emailSponsor);
+            }
+            (0, Transfers_1.sponsorTo)(userSponsor, userReceiver, [message, amountVal], paymentDBL);
+            console.log("======================================================");
+            break;
+        }
+        case 2: {
+            userDBL.printAll();
+            break;
+        }
+        case 3: {
+            paymentDBL.printAll();
+            break;
+        }
+        case 4: {
+            console.log(userDBL);
+            break;
+        }
+        case 5: {
+            console.log(paymentDBL);
+            break;
+        }
+        case 6: {
+            userDBL.bubbleSort(userDBL);
+            break;
+        }
+        default: {
+            console.log("WRONG INPUT");
+            break;
+        }
+    }
+    // const amountVal: number = +amount
+    // const checkMail = email  
+    // if(email == data[0].getEmail()){
+    //     console.error("This email is used to donated. (Wrong email)")
+    //     email = prompt("Input email (Sponsor):  ")
+    //     amount = prompt("Sponsor amount: ")
+    //     message = prompt("Write message: ")
+    // }  else {
+    //     continue
+    // }
+    // // const checkMail1 = "Official.hongphong@gmail.com"
+    // // const form1 = ["Lorem Ipsum is simply dummy text of the printing and typesetting industry. ", 100]
+    // const userSponsor = returnObject(data, checkMail)
+    // // const userSponsor1 = returnObject(data, checkMail1)
+    // const userReceiver = data[0]
+    // // console.log(data[0])
+    // // console.log(userSponsor)
+    // // console.log(userSponsor1)
+    // console.log("===================================================")
+    // // sponsorTo(userSponsor1, userReceiver, form1, paymentDBL)
+    // // console.log(data[0])
+    // // console.log(userSponsor)
+    // console.log(userDBL)
+    // // console.log("===================================================")
+    // // console.log(userSponsor1)
+    // console.log("===================================================")
+    // console.log(paymentDBL)
+}
 // // Return value of object
 // for( let key in data) {
 //     for (let value in data[key]){

@@ -1,11 +1,9 @@
-import { AccountUser } from "./Account";
-
 export class Node<T> {
-  value: AccountUser | undefined
+  value: T
   next: Node<T> | null
   prev: Node<T> | null
   constructor() {
-    this.value = new AccountUser([])
+    this.value = this.value
     this.next = null;
     this.prev = null;
   }
@@ -15,17 +13,15 @@ export class Node<T> {
 export class DoubleLinkedList<T> {
     head: Node<T> | null;
     tail: Node<T> | null;
-    comparator: (a: T, b: T) => boolean;
-
     size = 0;
+
     constructor() {
       this.head = null;
       this.tail = null;
       this.size = 0;
-      this.comparator = () => false;
     }
     
-    addFirst(value: AccountUser){
+    addFirst(value: T){
        if(this.isEmpty()){
            let tmp = new Node();
            tmp.value = value;
@@ -41,9 +37,9 @@ export class DoubleLinkedList<T> {
            this.head = tmp;
            this.size++;
        }
-   }
+    }
 
-    addLast(value: AccountUser){
+    addLast(value: T){
        if(this.isEmpty()){
           let tmp = new Node();
           tmp.value = value;
@@ -74,6 +70,16 @@ export class DoubleLinkedList<T> {
       let curr = this.head;
       while (curr) {
         console.log(curr.value);
+        curr = curr.next;
+      }
+    }
+
+    printAllEmail(): void {
+      let curr = this.head;
+      let index = 1
+      while (curr) {
+        console.log( index, " " , curr.value._email);
+        index++
         curr = curr.next;
       }
     }
@@ -143,5 +149,30 @@ export class DoubleLinkedList<T> {
             index++;
         }
         return "Value is not exit";
+    }
+    bubbleSort(start) {
+      var swapped;
+      var ptr1;
+      var lptr = null;
+
+      // Checking for empty list
+      if (start == null) return null;
+
+      do {
+        swapped = 0;
+        ptr1 = start;
+
+        while (ptr1.next != lptr) {
+          if (ptr1.value._balance > ptr1.next.value._balance) {
+            var t = ptr1.value._balance
+            ptr1.value._balance = ptr1.next.value._balance
+            ptr1.next.value._balance = t
+            swapped = 1;
+          }
+          ptr1 = ptr1.next;
+        }
+        lptr = ptr1;
+      } while (swapped != 0);
+      return start;
     }
   }

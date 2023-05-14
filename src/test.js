@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var DoubleLinkedList_1 = require("../Schematic/DoubleLinkedList");
+var fs = require("fs");
+var a = require("./helper");
+var userDBL = new DoubleLinkedList_1.DoubleLinkedList;
+var data = new Array();
+var dataUser = fs.readFileSync("../Schematic/data.json", 'utf-8');
+var jsonData = JSON.parse(dataUser);
+data, userDBL = a.renderData(jsonData, data, userDBL);
+console.log(data);
+console.log(userDBL);
