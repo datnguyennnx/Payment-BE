@@ -1,0 +1,12 @@
+version: "3"
+services:
+  postgres:
+    image: postgres
+    container_name: postgres_db_payment
+    env_file: ./.env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-postgres}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "${POSTGRES_LOCAL_PORT-3306}:${POSTGRES_DOCKER_PORT-3306}"
