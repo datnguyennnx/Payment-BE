@@ -8,8 +8,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model test {
-  id Int @id
-  key String
-  key2 String 
+model User {
+  id Int @id @default(autoincrement())
+  username String @unique
+  email String @unique  
+  password String
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
 }

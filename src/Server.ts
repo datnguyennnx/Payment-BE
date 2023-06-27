@@ -1,10 +1,10 @@
-import express from 'express'
-import  Consola from 'consola'
-import cors from 'cors'
-import * as bodyParser from 'body-parser'
-import * as dotenv from 'dotenv'
-import { PrismaClient } from '@prisma/client'
-
+import express from "express"
+import  Consola from "consola"
+import cors from "cors"
+import * as bodyParser from "body-parser"
+import * as dotenv from "dotenv"
+import { PrismaClient } from "@prisma/client"
+import { auth as AuthRoute} from "./routes/Auth"
 
 export class Server {
   public app: express.Application
@@ -43,16 +43,9 @@ export class Server {
     this.app.get('/', (req, res) => {
       res.json({ success: true, message : "JWT Authencation"})
     })
-  }
 
-  public async sendQuery() { 
-    const result = await this.prisma.test.create({
-      data: {
-        id: 1,
-        key: "Hello world!",
-        key2: " Goodbye ?"
-      }
-    }) 
-    console.log(result )
+    // Mapping url to localhost:port//api/v1/auth/register-login
+    this.app.use('/api/v1/auth', AuthRoute)
+    
   }
 }
